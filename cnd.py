@@ -1,19 +1,23 @@
 #!/usr/bin/python
 
-import cv2, sys
+import cv2, sys, time
 
 cap = cv2.VideoCapture(0)
+video_out = open("../sd-card/vlc-out", "w")
+
 while True:
+    start_time = time.time()
     ret, frame = cap.read()
+    end_time = time.time()
+    elapsed = end_time - start_time
+    # print elapsed
 
-    # Our operations on the frame come here
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-    # Display the resulting frame
+    sleepy_time = 0
+    if 1 - elapsed > 0:
+        sleepy_time = 1 - elapsed
+    time.sleep(sleepy_time)
     sys.stdout.write(frame.tostring())
 
-
-# When everything done, release the capture
 cap.release()
 cv2.destroyAllWindows()
 
